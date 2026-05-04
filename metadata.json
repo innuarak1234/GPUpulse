@@ -1,0 +1,6 @@
+{
+  "name": "GPUpulse.com",
+  "description": "A technical dashboard for comparing GPU specifications and driver history across AMD, NVIDIA, and Intel. Stay updated with the latest driver releases.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
