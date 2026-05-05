@@ -98,7 +98,7 @@ export default function App() {
             </AnimatePresence>
             
             {comparingGPUs.length < 4 && !loading && (
-              <div className="bg-white/2 border-2 border-dashed border-white/5 rounded-3xl p-8 flex flex-col items-center justify-center text-center gap-4 min-h-[450px] transition-colors hover:bg-white/4">
+              <div className="bg-white/5 border-2 border-dashed border-white/5 rounded-3xl p-8 flex flex-col items-center justify-center text-center gap-4 min-h-[450px] transition-colors hover:bg-white/10">
                 <div className="w-16 h-16 rounded-3xl bg-white/5 border border-white/10 flex items-center justify-center shadow-inner">
                   <Plus className="w-8 h-8 text-slate-600" />
                 </div>

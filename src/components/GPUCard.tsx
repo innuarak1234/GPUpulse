@@ -64,77 +64,77 @@ export const GPUCard: React.FC<GPUCardProps> = ({ gpu, onRemove }) => {
         <SpecRow icon={Zap} label="TDP" value={gpu.powerTDP} />
       </div>
 
-      {gpu.compatibleCPUs && (
-        <div className="mb-8 space-y-3">
-          <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
-            <Cpu className="w-3 h-3" />
-            Recommended CPUs
+    {gpu.compatibleCPUs && (
+      <div className="mb-8 space-y-3">
+        <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
+          <Cpu className="w-3 h-3" />
+          Recommended CPUs
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          <div className="bg-white/5 p-3 rounded-2xl border border-white/5">
+            <div className="text-[8px] text-blue-400 font-bold uppercase tracking-tighter mb-1">Intel Pairings</div>
+            <ul className="space-y-1">
+              {gpu.compatibleCPUs.intel?.slice(0, 3)?.map((cpu, i) => (
+                <li key={i} className="text-[10px] text-slate-300 truncate">{cpu}</li>
+              ))}
+            </ul>
           </div>
-          <div className="grid grid-cols-2 gap-2">
-            <div className="bg-white/5 p-3 rounded-2xl border border-white/5">
-              <div className="text-[8px] text-blue-400 font-bold uppercase tracking-tighter mb-1">Intel Pairings</div>
-              <ul className="space-y-1">
-                {gpu.compatibleCPUs.intel.slice(0, 3).map((cpu, i) => (
-                  <li key={i} className="text-[10px] text-slate-300 truncate">{cpu}</li>
-                ))}
-              </ul>
-            </div>
-            <div className="bg-white/5 p-3 rounded-2xl border border-white/5">
-              <div className="text-[8px] text-red-400 font-bold uppercase tracking-tighter mb-1">AMD Pairings</div>
-              <ul className="space-y-1">
-                {gpu.compatibleCPUs.amd.slice(0, 3).map((cpu, i) => (
-                  <li key={i} className="text-[10px] text-slate-300 truncate">{cpu}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <div className="text-[9px] text-center text-slate-600 font-medium italic">
-            Tier: {gpu.compatibleCPUs.tier}
+          <div className="bg-white/5 p-3 rounded-2xl border border-white/5">
+            <div className="text-[8px] text-red-400 font-bold uppercase tracking-tighter mb-1">AMD Pairings</div>
+            <ul className="space-y-1">
+              {gpu.compatibleCPUs.amd?.slice(0, 3)?.map((cpu, i) => (
+                <li key={i} className="text-[10px] text-slate-300 truncate">{cpu}</li>
+              ))}
+            </ul>
           </div>
         </div>
-      )}
+        <div className="text-[9px] text-center text-slate-600 font-medium italic">
+          Tier: {gpu.compatibleCPUs.tier}
+        </div>
+      </div>
+    )}
 
-      {gpu.partners && gpu.partners.length > 0 && (
-        <div className="mb-8 space-y-2">
-          <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
-            <Activity className="w-3 h-3" />
-            Partner Manufacturers
-          </div>
-          <div className="flex flex-wrap gap-1">
-            {gpu.partners.map((partner) => (
-              <span key={partner} className="px-2 py-0.5 rounded-full bg-white/5 border border-white/5 text-[9px] text-slate-400">
-                {partner}
-              </span>
-            ))}
-          </div>
+    {gpu.partners && gpu.partners.length > 0 && (
+      <div className="mb-8 space-y-2">
+        <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
+          <Activity className="w-3 h-3" />
+          Partner Manufacturers
         </div>
-      )}
-
-      <div className="mt-auto pt-6 border-t border-white/5 space-y-4">
-        <div className="flex items-center justify-between">
-          <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
-            <History className="w-3 h-3" />
-            Driver Stability
-          </div>
-        </div>
-        
-        <div className="space-y-3">
-          {gpu.drivers.slice(0, 3).map((driver, idx) => (
-            <div key={`${gpu.modelName}-${driver.version}-${idx}`} className="bg-white/5 p-3 rounded-2xl border border-white/5 relative overflow-hidden group/item">
-              <div className="flex justify-between items-start">
-                <div>
-                  <div className="text-[11px] font-bold text-white leading-none">{driver.version}</div>
-                  <div className="text-[9px] text-slate-500 mt-1">{driver.releaseDate}</div>
-                </div>
-                <div className={cn(
-                  "w-1.5 h-1.5 rounded-full",
-                  idx === 0 ? "bg-blue-400" : "bg-slate-700"
-                )} />
-              </div>
-            </div>
+        <div className="flex flex-wrap gap-1">
+          {gpu.partners?.map((partner) => (
+            <span key={partner} className="px-2 py-0.5 rounded-full bg-white/5 border border-white/5 text-[9px] text-slate-400">
+              {partner}
+            </span>
           ))}
         </div>
       </div>
+    )}
+
+    <div className="mt-auto pt-6 border-t border-white/5 space-y-4">
+      <div className="flex items-center justify-between">
+        <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
+          <History className="w-3 h-3" />
+          Driver Stability
+        </div>
+      </div>
+      
+      <div className="space-y-3">
+        {gpu.drivers?.slice(0, 3)?.map((driver, idx) => (
+          <div key={`${gpu.modelName}-${driver.version}-${idx}`} className="bg-white/5 p-3 rounded-2xl border border-white/5 relative overflow-hidden group/item">
+            <div className="flex justify-between items-start">
+              <div>
+                <div className="text-[11px] font-bold text-white leading-none">{driver.version}</div>
+                <div className="text-[9px] text-slate-500 mt-1">{driver.releaseDate}</div>
+              </div>
+              <div className={cn(
+                "w-1.5 h-1.5 rounded-full",
+                idx === 0 ? "bg-blue-400" : "bg-slate-700"
+              )} />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
     </motion.div>
   );
 };

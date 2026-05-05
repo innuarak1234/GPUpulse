@@ -45,7 +45,7 @@ export function LatestDrivers() {
             <div key={i} className="h-24 bg-white/5 border border-white/5 rounded-2xl animate-pulse" />
           ))
         ) : (
-          updates.map((update) => (
+          updates?.map((update) => (
             <motion.div
               key={update.brand}
               initial={{ opacity: 0, scale: 0.95 }}
