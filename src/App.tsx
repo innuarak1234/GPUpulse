@@ -15,12 +15,27 @@ export default function App() {
 
   const handleSelectGPU = async (modelName: string) => {
     if (comparingGPUs.length >= 4) return;
-    if (comparingGPUs.some(g => g.modelName === modelName)) return;
+    
+    // Preliminary check with search query
+    if (comparingGPUs.some(g => g.modelName.toLowerCase() === modelName.toLowerCase())) return;
 
     setLoading(true);
-    const detail = await getGPUDetails(modelName);
-    if (detail) setComparingGPUs(prev => [...prev, detail]);
-    setLoading(false);
+    try {
+      const detail = await getGPUDetails(modelName);
+      if (detail) {
+        setComparingGPUs(prev => {
+          // Final check with the actual resolved model name
+          if (prev.some(g => g.modelName === detail.modelName)) {
+            return prev;
+          }
+          return [...prev, detail];
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching GPU details:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const removeGPU = (modelName: string) => {

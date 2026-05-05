@@ -120,7 +120,7 @@ export const GPUCard: React.FC<GPUCardProps> = ({ gpu, onRemove }) => {
         
         <div className="space-y-3">
           {gpu.drivers.slice(0, 3).map((driver, idx) => (
-            <div key={driver.version} className="bg-white/5 p-3 rounded-2xl border border-white/5 relative overflow-hidden group/item">
+            <div key={`${gpu.modelName}-${driver.version}-${idx}`} className="bg-white/5 p-3 rounded-2xl border border-white/5 relative overflow-hidden group/item">
               <div className="flex justify-between items-start">
                 <div>
                   <div className="text-[11px] font-bold text-white leading-none">{driver.version}</div>
