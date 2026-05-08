@@ -1,10 +1,23 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { GPUDetail, LatestDriverUpdate, GPUBrand } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+let aiInstance: GoogleGenAI | null = null;
+
+function getAI(): GoogleGenAI {
+  if (!aiInstance) {
+    // If the key is missing or undefined, we don't crash on module load
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      console.warn("GEMINI_API_KEY is not defined. AI calls will fail.");
+    }
+    aiInstance = new GoogleGenAI({ apiKey: apiKey || "dummy_key_to_prevent_crash" });
+  }
+  return aiInstance;
+}
 
 export async function searchGPUMetal(query: string): Promise<string[]> {
   try {
+    const ai = getAI();
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
       contents: `List real potential GPU model names matching "${query}" for AMD, NVIDIA, or Intel. Return as a JSON array of strings.`,
@@ -26,6 +39,7 @@ export async function searchGPUMetal(query: string): Promise<string[]> {
 
 export async function getGPUDetails(modelName: string): Promise<GPUDetail | null> {
   try {
+    const ai = getAI();
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
       contents: `Find the specifications, driver history (at least 3 previous versions), current MSRP/launch price, major AIB partner brands (e.g. ASUS, MSI, Gigabyte), and recommended CPU pairings (Intel and AMD models that avoid significant bottlenecks) for the GPU: ${modelName}. Use Google Search for accuracy.`,
@@ -84,6 +98,7 @@ export async function getGPUDetails(modelName: string): Promise<GPUDetail | null
 
 export async function getLatestDriverUpdates(): Promise<LatestDriverUpdate[]> {
   try {
+    const ai = getAI();
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
       contents: "Find the latest stable driver version, release date, and official download URL for NVIDIA (GeForce), AMD (Adrenalin), and Intel (Arc/Iris Xe). Use Google Search.",
